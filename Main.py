@@ -8,6 +8,7 @@ import os
 
 from FileCopier import FileCopier
 from FilePathParser import FilePathParser
+from FileRenamer import FileRenamer
 from FolderCreator import FolderCreator
 
 
@@ -16,15 +17,15 @@ def get_file_path_from_user():
     file_path = input("Enter the file path: ")
     return file_path
 
+
 def main():
     """Main function."""
     # get file path from user
     file_path = get_file_path_from_user()
 
-    #Instantiate FilePathParser class
+    # Instantiate FilePathParser class
     parser = FilePathParser(file_path)
     customer_name, job_number, process_type, process_name = parser.parse()
-
 
     # Print the parsed information
     print("Customer Name:", customer_name)
@@ -51,9 +52,14 @@ def main():
 
     print("Files copied successfully.")
 
+    # Instantiate FileRenamer class
+    renamer = FileRenamer(file_path, job_number)
+
+    # Rename copied files based on job number
+    renamer.rename_files()
+
+    print("Files renamed successfully.")
 
 class Main:
-
-
     if __name__ == '__main__':
         main()

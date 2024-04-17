@@ -6,6 +6,7 @@ Objective: This class renames files based on specified new names.
 
 import os
 
+
 class FileRenamer:
     """Class to rename files based on the provided job number."""
 
@@ -18,17 +19,12 @@ class FileRenamer:
         # Define destination directory
         destination_dir = self.destination_path
 
-        # Define file names to be renamed based on the job number
-        files_to_rename = [
-            "AWC RMA Request Form #.docx",
-            "AWC Inspection Report #.docx",
-            "Field Service Work Order #.xlsx",
-            "Inspection Work Order #.xlsx",
-            "Assembly Work Order #.xlsx"
-        ]
-
-        # Rename each specified file by inserting job number
-        for file_name in files_to_rename:
-            if os.path.exists(os.path.join(destination_dir, file_name)):
-                new_file_name = file_name.replace('#', f'#{self.job_number}')
-                os.rename(os.path.join(destination_dir, file_name), os.path.join(destination_dir, new_file_name))
+        for root, _, files in os.walk(destination_dir):
+            for file_name in files:
+                if '#' in file_name:
+                    source_file_path = os.path.join(root, file_name)
+                    new_file_name = file_name.replace('#', f'#{self.job_number}')
+                    new_file_path = os.path.join(root, new_file_name)
+                    print(f"Renaming '{file_name}' to '{new_file_name}'")
+                    os.rename(source_file_path, new_file_path)
+                    print("File renamed successfully.")

@@ -6,6 +6,7 @@ Objective: This class creates folders based on parsed information such as custom
 
 import os
 
+
 class FolderCreator:
     """Class to create folders based on the provided file path."""
 

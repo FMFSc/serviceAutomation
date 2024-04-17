@@ -1,7 +1,7 @@
 """
 Author: Fellipe Scirea
 Version: 1.0
-Objective: This class copies specific files from a source directory to a destination directory based on the process name.
+This class copies specific files from a source directory to a destination directory based on the process name.
 """
 import os
 import shutil
@@ -31,7 +31,8 @@ class FileCopier:
         # Define work_order_files dictionary (modify based on your process types)
         self.work_order_files = {
             "Repair": ["Assembly Work Order #.xlsx", "Inspection Work Order #.xlsx"],
-            "Field Service": ["Field Service Work Order #.xlsx", "Assembly Work Order #.xlsx", "Inspection Work Order #.xlsx"]
+            "Field Service": ["Field Service Work Order #.xlsx", "Assembly Work Order #.xlsx",
+                              "Inspection Work Order #.xlsx"]
         }
 
     def copy_files(self, process_type):
@@ -58,4 +59,3 @@ class FileCopier:
                 os.makedirs(destination_folder, exist_ok=True)
                 shutil.copy2(source_file, destination_folder)
                 print(f"Copied {source_file} to {destination_folder}")
-
