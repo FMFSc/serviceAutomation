@@ -42,8 +42,8 @@ def main():
     print("Folders created successfully.")
 
     # Instantiate FileCopier class
-    source_path = r"C:\Users\Fellipes\Documents\serviceAutomation"
-    destination_path = file_path
+    source_path = r"C:\Users\Fellipes\Documents\serviceAutomation"  # Adjust as needed
+    destination_path = file_path  # Adjust as needed
     copier = FileCopier(source_path, destination_path)
 
     # Copy files based on the process type

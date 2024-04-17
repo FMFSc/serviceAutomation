@@ -3,7 +3,6 @@ Author: Fellipe Scirea
 Version: 1.0
 Objective: This class copies specific files from a source directory to a destination directory based on the process name.
 """
-
 import os
 import shutil
 
@@ -15,31 +14,48 @@ class FileCopier:
         self.source_path = source_path
         self.destination_path = destination_path
 
+        # Define process_templates dictionary with folder names
+        self.process_templates = {
+            "Repair": {
+                "RMA": "AWC RMA Request Form #.docx",
+                "Proposal": "AWC Inspection Report #.docx",
+                "Work Orders": "Work Orders"  # String for the folder name
+            },
+            "Field Service": {
+                "RMA": "AWC RMA Request Form #.docx",
+                "Proposal": "AWC Field Service Report #.docx",
+                "Work Orders": "Work Orders"  # String for the folder name
+            }
+        }
+
+        # Define work_order_files dictionary (modify based on your process types)
+        self.work_order_files = {
+            "Repair": ["Assembly Work Order #.xlsx", "Inspection Work Order #.xlsx"],
+            "Field Service": ["Field Service Work Order #.xlsx", "Assembly Work Order #.xlsx", "Inspection Work Order #.xlsx"]
+        }
+
     def copy_files(self, process_type):
         """Copy files based on the process type."""
-        # Define source and destination directories
-        source_dir = self.source_path
-        destination_dir = self.destination_path
 
-        # Define file paths based on process type
-        if process_type == "Repair":
-            rma_file = "AWC RMA Request Form.docx"
-            proposal_file = "AWC Inspection Report #.docx"
-            work_order_files = ["Inspection Work Order #.xlsx", "Assembly Work Order #.xlsx"]
-        elif process_type == "Field Service":
-            rma_file = "AWC RMA Request Form.docx"
-            proposal_file = "AWC Field Service Report #.docx"
-            work_order_files = ["Field Service Work Order #.xlsx", "Inspection Work Order #.xlsx",
-                                "Assembly Work Order #.xlsx"]
-        else:
-            # Default values if process type is unknown
-            rma_file = ""
-            proposal_file = ""
-            work_order_files = []
+        process_templates = self.process_templates.get(process_type)
 
-        # Copy files to respective folders
-        shutil.copy2(os.path.join(source_dir, rma_file), os.path.join(destination_dir, "RMA", rma_file))
-        shutil.copy2(os.path.join(source_dir, proposal_file), os.path.join(destination_dir, "Proposal", proposal_file))
-        for work_order_file in work_order_files:
-            shutil.copy2(os.path.join(source_dir, work_order_file),
-                         os.path.join(destination_dir, "Work Orders", work_order_file))
+        if not process_templates:
+            print(f"Invalid process type: {process_type}")
+            return
+
+        for folder, file_pattern in process_templates.items():
+            destination_folder = os.path.join(self.destination_path, folder)
+
+            if folder == "Work Orders":
+                for work_order_file in self.work_order_files[process_type]:
+                    source_file = os.path.join(self.source_path, work_order_file)
+                    destination_work_order_folder = os.path.join(self.destination_path, folder)
+                    os.makedirs(destination_work_order_folder, exist_ok=True)
+                    shutil.copy2(source_file, destination_work_order_folder)
+                    print(f"Copied {source_file} to {destination_work_order_folder}")
+            else:
+                source_file = os.path.join(self.source_path, file_pattern)
+                os.makedirs(destination_folder, exist_ok=True)
+                shutil.copy2(source_file, destination_folder)
+                print(f"Copied {source_file} to {destination_folder}")
+

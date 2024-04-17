@@ -33,7 +33,8 @@ class FilePathParser:
         process_index = job_number_and_process.find("Field Service")
         if process_index == -1:
             process_index = job_number_and_process.find("Repair")
-        process_name = job_number_and_process[process_index+len("Field Service"):].strip() if process_index != -1 else "Unknown"
+        process_name = job_number_and_process[
+                       process_index + len("Field Service"):].strip() if process_index != -1 else "Unknown"
 
         # Determine the type of process (Field Service or Repair)
         process_type = "Field Service" if "Field Service" in job_number_and_process else "Repair" if "Repair" in job_number_and_process else "Unknown"
