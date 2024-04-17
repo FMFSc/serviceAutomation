@@ -7,6 +7,7 @@ Objective: This class will handle the input provided as a file path, and call in
 import os
 
 from FilePathParser import FilePathParser
+from FolderCreator import FolderCreator
 
 
 def get_file_path_from_user():
@@ -29,6 +30,15 @@ def main():
     print("Job Number:", job_number)
     print("Process Type:", process_type)
     print("Process Name:", process_name)
+
+    # Instantiate FolderCreator class
+    base_path = file_path  # Your base path here
+    creator = FolderCreator(base_path)
+
+    # Create folders based on the process type
+    creator.create_folders(process_type)
+
+    print("Folders created successfully.")
 
 class Main:
 
