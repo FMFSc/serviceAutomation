@@ -6,6 +6,7 @@ Objective: This class will handle the input provided as a file path, and call in
 
 import os
 
+from FileCopier import FileCopier
 from FilePathParser import FilePathParser
 from FolderCreator import FolderCreator
 
@@ -39,6 +40,17 @@ def main():
     creator.create_folders(process_type)
 
     print("Folders created successfully.")
+
+    # Instantiate FileCopier class
+    source_path = r"C:\Users\Fellipes\Documents\serviceAutomation"
+    destination_path = file_path
+    copier = FileCopier(source_path, destination_path)
+
+    # Copy files based on the process type
+    copier.copy_files(process_type)
+
+    print("Files copied successfully.")
+
 
 class Main:
 
