@@ -1,7 +1,5 @@
 # serviceAutomation
 
-# serviceAutomation
-
 A small Python CLI tool that automates service job folder setup and template document preparation.
 
 Given a job folder path, it:
